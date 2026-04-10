@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Nitya Book Publication</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body{
+    margin:0;
+    font-family:'Poppins',sans-serif;
+    background: linear-gradient(135deg, #021b1b, #0f3d3e, #1f7a7a);
+    color:white;
+}
+
+.nav{
+    background:rgba(255,255,255,0.08);
+    backdrop-filter:blur(10px);
+    padding:18px;
+    text-align:center;
+    font-size:24px;
+    font-weight:600;
+    position:relative;
+}
+
+.menu{
+    position:absolute;
+    right:20px;
+    top:18px;
+    font-size:26px;
+    cursor:pointer;
+}
+
+.section{display:none;padding:20px}
+
+.card{
+    background:rgba(255,255,255,0.08);
+    padding:20px;
+    margin:15px 0;
+    border-radius:18px;
+    transition:0.3s;
+    cursor:pointer;
+}
+.card:hover{transform:scale(1.03)}
+.selected{border:2px solid #ffffff}
+
+.btn{
+    width:100%;
+    padding:14px;
+    background:linear-gradient(45deg,#00ffcc,#009688);
+    color:white;
+    border:none;
+    border-radius:10px;
+    margin-top:12px;
+    font-weight:bold;
+    cursor:pointer;
+}
+.btn:hover{transform:scale(1.05)}
+
+.back{
+    background:none;
+    border:none;
+    color:#00ffcc;
+    font-size:16px;
+    margin-bottom:10px;
+    cursor:pointer;
+}
+
+input{
+    width:100%;
+    padding:13px;
+    margin:8px 0;
+    border-radius:8px;
+    border:none;
+    background:rgba(255,255,255,0.1);
+    color:white;
+}
+
+img{
+    width:200px;
+    display:block;
+    margin:15px auto;
+}
+
+.footer{
+    text-align:center;
+    padding:12px;
+    background:rgba(255,255,255,0.05);
+}
+
+.deleteBtn{
+    background:red;
+    border:none;
+    padding:6px 10px;
+    border-radius:6px;
+    color:white;
+    margin-top:8px;
+    cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="nav">
+📚 Nitya Book Publication
+<span class="menu" onclick="show('loginType')">⋮</span>
+</div>
+
+<!-- HOME -->
+<div id="home" class="section" style="display:block">
+<h2>Handwriting Work From Home</h2>
+
+<div class="card" onclick="selectPlan('Project 1 - ₹499',499)">
+<h2>📗Project 1</h2>
+<p>50 Pages front & Back 100</p>
+<p>Salary • ₹25,000</p>
+<p>Time Duration 7 Days</p>
+<p>Registration fee ₹499</p>
+</div>
+
+<div class="card" onclick="selectPlan('Project 2 - ₹899',899)">
+<h2>📙Project 2</h2>
+<p>90 Pages front & Back 180</p>
+<p>Salary • ₹32,500</p>
+<p>Time Duration 15 Days</p>
+<p>Registration fee ₹899</p>
+</div>
+
+<div class="card" onclick="selectPlan('Project 3 - ₹1199',1199)">
+<h2>📕Project 3</h2>
+<p>120 Pages front & Back 240</p>
+<p>Salary • ₹40,000</p>
+<p>Time Duration 30 Days</p>
+<p>Registration fee ₹1199</p>
+</div>
+
+<div class="card" onclick="selectPlan('Project 4 - ₹1599',1599)">
+<h2>📙Project 4</h2>
+<p>150 Pages front & Back 300</p>
+<p>Salary • ₹48,500</p>
+<p>Time Duration 45 Days</p>
+<p>Registration fee ₹1599</p>
+</div>
+
+<div class="card" onclick="selectPlan('Project 5 - ₹2099',2099)">
+<h2>📘Project 5</h2>
+<p>210 Pages front & Back 420</p>
+<p>Salary • ₹58,500</p>
+<p>Time Duration 60 Days</p>
+<p>Registration fee ₹2099</p>
+</div>
+
+<button class="btn" onclick="goToForm()">Continue</button>
+</div>
+
+<!-- LOGIN TYPE -->
+<div id="loginType" class="section">
+<button class="back" onclick="goBack()">⬅ Back</button>
+<h2>Select Login</h2>
+<button class="btn" onclick="openLogin('admin')">Admin Login</button>
+<button class="btn" onclick="openLogin('manager')">Manager Login</button>
+</div>
+
+<!-- LOGIN -->
+<div id="login" class="section">
+<button class="back" onclick="goBack()">⬅ Back</button>
+<h2 id="loginTitle"></h2>
+<input type="password" id="loginPass" placeholder="Enter Password">
+<button class="btn" onclick="login()">Login</button>
+</div>
+
+<!-- ADMIN -->
+<div id="admin" class="section">
+<button class="back" onclick="goBack()">⬅ Back</button>
+<h2>⚙️ Admin Panel</h2>
+
+<input id="newupi" placeholder="Enter New UPI ID">
+<button class="btn" onclick="updateUPI()">Update UPI</button>
+
+<div id="adminData"></div>
+
+<button class="btn" onclick="logout()">Logout</button>
+</div>
+
+<!-- MANAGER -->
+<div id="manager" class="section">
+<button class="back" onclick="goBack()">⬅ Back</button>
+<h2>📊 Manager Panel</h2>
+
+<div id="managerData"></div>
+
+<button class="btn" onclick="logout()">Logout</button>
+</div>
+
+<!-- FORM -->
+<div id="form" class="section">
+<button class="back" onclick="goBack()">⬅ Back</button>
+<h2 id="planText"></h2>
+
+<input id="name" placeholder="Full Name">
+<input id="mobile" placeholder="Mobile Number">
+<input id="address" placeholder="Full Address">
+<input id="state" placeholder="State">
+<input id="pin" placeholder="Pin Code">
+
+<button class="btn" onclick="submitForm()">Submit</button>
+</div>
+
+<!-- PAYMENT -->
+<div id="payment" class="section">
+<button class="back" onclick="goBack()">⬅ Back</button>
+<h2>💳 Payment</h2>
+<p id="planPay"></p>
+<img id="qrimg">
+<button class="btn" onclick="payNow()">Pay via UPI</button>
+<button class="btn" onclick="done()">I Have Paid</button>
+</div>
+
+<div class="footer">© 2026 Nitya Book Publication</div>
+
+<script>
+
+let selectedPlan="";
+let amount=0;
+let historyStack=[];
+let loginType="";
+
+const ADMIN_PASS="dk0578";
+const MANAGER_PASS="636711";
+
+if(!localStorage.getItem("upi")){
+    localStorage.setItem("upi","manojgomladu143@fam");
+}
+
+window.onload=function(){
+    show("home");
+    loadUsers();
+}
+
+function show(id){
+    document.querySelectorAll(".section").forEach(s=>s.style.display="none");
+    document.getElementById(id).style.display="block";
+    historyStack.push(id);
+}
+
+function goBack(){
+    historyStack.pop();
+    let last=historyStack.pop() || "home";
+    show(last);
+}
+
+function openLogin(type){
+    loginType=type;
+    loginTitle.innerText=type.toUpperCase()+" LOGIN";
+    show("login");
+}
+
+function login(){
+    if(loginType==="admin" && loginPass.value===ADMIN_PASS){
+        show("admin");
+        loadUsers();
+    }
+    else if(loginType==="manager" && loginPass.value===MANAGER_PASS){
+        show("manager");
+        loadUsers();
+    }
+    else{
+        alert("Wrong Password");
+    }
+}
+
+function logout(){
+    show("home");
+}
+
+function selectPlan(plan,amt){
+    selectedPlan=plan;
+    amount=amt;
+}
+
+function goToForm(){
+    if(selectedPlan==""){alert("Select Plan");return;}
+    show("form");
+    planText.innerText=selectedPlan;
+}
+
+function submitForm(){
+    let users=JSON.parse(localStorage.getItem("users")||"[]");
+
+    users.push({
+        plan:selectedPlan,
+        name:name.value,
+        mobile:mobile.value,
+        address:address.value,
+        state:state.value,
+        pin:pin.value
+    });
+
+    localStorage.setItem("users",JSON.stringify(users));
+
+    show("payment");
+    planPay.innerText=selectedPlan;
+
+    let upi=localStorage.getItem("upi");
+    qrimg.src=`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi://pay?pa=${upi}&pn=NityaBook&am=${amount}&cu=INR&tn=Registration`;
+}
+
+function payNow(){
+    let upi=localStorage.getItem("upi");
+    window.location.href=`upi://pay?pa=${upi}&pn=NityaBook&am=${amount}&cu=INR&tn=Registration`;
+}
+
+function done(){
+    window.open("https://wa.me/917976181104");
+}
+
+function updateUPI(){
+    localStorage.setItem("upi",newupi.value);
+    alert("UPI Updated");
+}
+
+function deleteUser(index){
+    let users=JSON.parse(localStorage.getItem("users")||"[]");
+    users.splice(index,1);
+    localStorage.setItem("users",JSON.stringify(users));
+    loadUsers();
+}
+
+function loadUsers(){
+    let users=JSON.parse(localStorage.getItem("users")||"[]");
+
+    let adminHTML="";
+    let managerHTML="";
+
+    users.forEach((u,i)=>{
+        adminHTML+=`
+        <div style="background:rgba(255,255,255,0.1);padding:10px;margin:10px;border-radius:10px">
+        <b>${u.name}</b><br>${u.mobile}<br>${u.plan}<br>
+        <button class="deleteBtn" onclick="deleteUser(${i})">Delete</button>
+        </div>`;
+
+        managerHTML+=`
+        <div style="background:rgba(255,255,255,0.1);padding:10px;margin:10px;border-radius:10px">
+        <b>${u.name}</b><br>${u.mobile}<br>${u.plan}
+        </div>`;
+    });
+
+    if(adminData) adminData.innerHTML=adminHTML;
+    if(managerData) managerData.innerHTML=managerHTML;
+}
+
+</script>
+
+</body>
+</html>
